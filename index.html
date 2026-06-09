@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Copiloto Dev</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="page-shell">
+    <div class="topbar">
+      <div class="brand-lockup">
+        <span class="brand-mark">CD</span>
+        <div>
+          <strong>Copiloto Dev</strong>
+          <p>planner inteligente para sua semana de codigo</p>
+        </div>
+      </div>
+      <div class="topbar-pills">
+        <span class="top-pill">prioridade inteligente</span>
+        <span class="top-pill">rotina gamificada</span>
+        <span class="top-pill">visual dashboard</span>
+      </div>
+    </div>
+
+    <header class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">Copiloto dev</p>
+        <h1>Transforme tarefas soltas em uma rotina de codigo que faz sentido.</h1>
+        <p class="hero-text">
+          Escreva o que esta na sua frente e o planner organiza prioridade, ritmo e execucao sem te afogar em configuracao.
+        </p>
+        <div class="assistant-strip">
+          <span class="assistant-chip">assistant active</span>
+          <span class="assistant-chip">backlog reading</span>
+          <span class="assistant-chip">weekly control panel</span>
+        </div>
+        <div class="hero-tags">
+          <span>organiza o caos</span>
+          <span>mostra a melhor ordem</span>
+          <span>mantem seu ritmo</span>
+        </div>
+        <div class="hero-steps">
+          <article class="hero-step">
+            <span class="step-index">1</span>
+            <div>
+              <strong>Descreva suas tarefas</strong>
+              <p>uma linha por item, do jeito que voce ja pensa no dia a dia</p>
+            </div>
+          </article>
+          <article class="hero-step">
+            <span class="step-index">2</span>
+            <div>
+              <strong>Defina o ritmo da semana</strong>
+              <p>prazo, momento e quantas sessoes realmente cabem no seu dia</p>
+            </div>
+          </article>
+          <article class="hero-step">
+            <span class="step-index">3</span>
+            <div>
+              <strong>Siga o mapa montado</strong>
+              <p>o sistema te mostra ordem, proxima acao, pontos e progresso</p>
+            </div>
+          </article>
+        </div>
+        <div class="assistant-console">
+          <div class="console-head">
+            <span class="console-dot"></span>
+            <span class="console-dot"></span>
+            <span class="console-dot"></span>
+            <strong>assistant://planner-core</strong>
+          </div>
+          <div class="console-grid">
+            <article class="console-card">
+              <span class="console-label">ANALISE</span>
+              <strong>entende prioridade</strong>
+              <p>le impacto, bloqueio e peso antes de sugerir a ordem</p>
+            </article>
+            <article class="console-card">
+              <span class="console-label">RITMO</span>
+              <strong>distribui melhor</strong>
+              <p>quebra a semana em sessoes que cabem de verdade</p>
+            </article>
+            <article class="console-card">
+              <span class="console-label">FEEDBACK</span>
+              <strong>mostra progresso</strong>
+              <p>xp, badges e progresso viram um painel de acompanhamento</p>
+            </article>
+          </div>
+        </div>
+        <div class="hero-wave"></div>
+      </div>
+      <div class="hero-panel">
+        <div class="metric">
+          <span class="metric-label">Ritmo combinado</span>
+          <strong id="focusMetric">0 sessoes</strong>
+        </div>
+        <div class="metric">
+          <span class="metric-label">Avanco da semana</span>
+          <strong id="doneMetric">0%</strong>
+        </div>
+        <div class="metric gamified">
+          <span class="metric-label">XP da semana</span>
+          <strong id="xpMetric">0 XP</strong>
+          <span id="levelMetric" class="metric-foot">Nivel 1</span>
+        </div>
+        <article class="metric highlight">
+          <span class="metric-label">Leitura do planner</span>
+          <strong>Assistida</strong>
+          <span class="metric-foot">entrada simples, decisao guiada e painel continuo</span>
+        </article>
+      </div>
+    </header>
+
+    <main class="layout">
+      <div class="workspace-switcher">
+        <button type="button" id="planViewButton" class="switcher-button active">Planejar</button>
+        <button type="button" id="executionViewButton" class="switcher-button">Mapa de execucao</button>
+      </div>
+
+      <section class="panel input-panel" data-view="plan">
+        <div class="panel-intro">
+          <h2>Montar meu plano</h2>
+          <p>Preencha so o essencial. O planner faz o trabalho pesado de organizar.</p>
+        </div>
+        <form id="plannerForm">
+          <section class="form-section">
+            <div class="form-section-head">
+              <span class="section-number">01</span>
+              <div>
+                <h3>Contexto rapido</h3>
+                <p>o minimo para eu entender a semana</p>
+              </div>
+            </div>
+
+            <label>
+              Projeto ou contexto
+              <input id="project" name="project" type="text" placeholder="Ex.: SaaS interno, freela, estudo pessoal">
+            </label>
+
+            <label>
+              O que voce quer destravar nesta semana
+              <input id="goal" name="goal" type="text" placeholder="Ex.: entregar autenticacao, fechar bugs criticos e subir deploy" required>
+            </label>
+          </section>
+
+          <section class="form-section">
+            <div class="form-section-head">
+              <span class="section-number">02</span>
+              <div>
+                <h3>Backlog real</h3>
+                <p>uma linha por tarefa, sem formatar bonito</p>
+              </div>
+            </div>
+
+            <label>
+              O que esta na sua frente agora
+              <textarea id="activities" name="activities" rows="6" placeholder="Uma linha por tarefa. Ex.: corrigir login social&#10;refatorar dashboard&#10;subir endpoint de faturamento" required></textarea>
+            </label>
+            <p class="field-tip">Dica: misture bugs, features, revisoes e deploys. O planner tenta entender a prioridade sozinho.</p>
+          </section>
+
+          <section class="form-section">
+            <div class="form-section-head">
+              <span class="section-number">03</span>
+              <div>
+                <h3>Ritmo da semana</h3>
+                <p>para o plano caber na sua rotina de verdade</p>
+              </div>
+            </div>
+
+            <div class="grid two">
+              <label>
+                Data limite
+                <input id="deadline" name="deadline" type="date" required>
+              </label>
+
+              <label>
+                Quantas sessoes de codigo cabem no seu dia
+                <input id="dailyBlocks" name="dailyBlocks" type="number" min="1" max="8" value="3" required>
+              </label>
+            </div>
+
+            <div class="grid two">
+              <label>
+                Qual e o seu momento
+                <select id="pace" name="pace">
+                  <option value="leve">Mais leve</option>
+                  <option value="equilibrado" selected>Normal</option>
+                  <option value="intenso">Puxado</option>
+                </select>
+              </label>
+
+              <label>
+                O que mais combina com essas tarefas
+                <select id="workType" name="workType">
+                  <option value="feature" selected>Construir algo</option>
+                  <option value="bugfix">Corrigir algo</option>
+                  <option value="refactor">Organizar codigo</option>
+                  <option value="study">Estudar</option>
+                  <option value="ops">Publicar / manter</option>
+                </select>
+              </label>
+            </div>
+
+            <label>
+              O que eu preciso considerar da sua rotina
+              <textarea id="constraints" name="constraints" rows="3" placeholder="Ex.: reuniao diaria 10h, so codar a noite, preciso revisar PR antes de subir deploy"></textarea>
+            </label>
+          </section>
+
+          <div class="actions">
+            <button type="submit" class="primary">Montar meu plano</button>
+            <button type="button" id="resetButton" class="ghost">Limpar</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="panel output-panel hidden-panel" data-view="execution">
+        <div class="section-head">
+          <div class="panel-intro compact">
+            <h2>Seu mapa de execucao</h2>
+            <p>prioridade, ritmo e progresso em uma unica leitura</p>
+          </div>
+          <div class="section-actions">
+            <button type="button" id="backToPlanButton" class="ghost">Voltar ao plano</button>
+          </div>
+        </div>
+
+        <div id="emptyState" class="empty-state">
+          <p>Assim que voce montar o plano, esta area vira seu painel da semana.</p>
+          <div class="empty-checklist">
+            <span>Prioridade inteligente</span>
+            <span>Agenda por sessoes</span>
+            <span>XP, nivel e badges</span>
+          </div>
+        </div>
+
+        <div id="planContent" class="plan-content hidden">
+          <article class="summary-card">
+            <p class="eyebrow">Panorama</p>
+            <h3 id="summaryTitle"></h3>
+            <p id="summaryText"></p>
+          </article>
+
+          <section class="timeline-wrap">
+            <div class="section-head compact">
+              <h3>Painel de ritmo</h3>
+              <span id="gameHint"></span>
+            </div>
+            <div class="game-board">
+              <article class="game-card">
+                <p class="game-label">Streak</p>
+                <strong id="streakMetric" class="game-value">0</strong>
+                <span class="game-note">dias com pelo menos uma entrega</span>
+              </article>
+              <article class="game-card">
+                <p class="game-label">Missao do dia</p>
+                <strong id="missionMetric" class="game-value">0/0</strong>
+                <span id="missionNote" class="game-note">complete seu plano para liberar</span>
+              </article>
+              <article class="game-card">
+                <p class="game-label">Proximo nivel</p>
+                <strong id="levelProgressMetric" class="game-value">0%</strong>
+                <div class="progress-track">
+                  <div id="levelProgressBar" class="progress-fill"></div>
+                </div>
+              </article>
+            </div>
+            <div id="badgeBoard" class="badge-board"></div>
+          </section>
+
+          <section class="timeline-wrap">
+            <div class="section-head compact">
+              <h3>Prioridade do momento</h3>
+              <span id="priorityHint"></span>
+            </div>
+            <div id="priorityBoard" class="priority-board"></div>
+          </section>
+
+          <section class="timeline-wrap">
+            <div class="section-head compact">
+              <h3>Roteiro da semana</h3>
+              <span id="timelineHint"></span>
+            </div>
+            <div id="timeline" class="timeline"></div>
+          </section>
+
+          <section class="schedule-wrap">
+            <div class="section-head compact">
+              <h3>Sessoes da semana</h3>
+              <span id="scheduleHint"></span>
+            </div>
+            <div id="schedule" class="schedule"></div>
+          </section>
+
+          <section class="daily-table-wrap">
+            <div class="section-head compact">
+              <h3>Tabela diaria</h3>
+              <span>visao geral de execucao por dia</span>
+            </div>
+            <div class="table-shell">
+              <table class="daily-table">
+                <thead>
+                  <tr>
+                    <th>Dia</th>
+                    <th>Tarefa</th>
+                    <th>Tipo</th>
+                    <th>Sessoes</th>
+                    <th>Janela</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="dailyTableBody"></tbody>
+              </table>
+            </div>
+          </section>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <template id="taskTemplate">
+    <label class="task-item">
+      <input type="checkbox" class="task-check">
+      <span class="task-copy"></span>
+      <span class="task-tag"></span>
+    </label>
+  </template>
+
+  <script src="scripts/constants.js"></script>
+  <script src="scripts/utils.js"></script>
+  <script src="scripts/storage.js"></script>
+  <script src="scripts/gamification.js"></script>
+  <script src="scripts/planner-engine.js"></script>
+  <script src="scripts/render.js"></script>
+  <script src="scripts/main.js"></script>
+</body>
+</html>
